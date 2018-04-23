@@ -1,6 +1,9 @@
 pipeline {
-  agent  { label 'has-docker'
-  docker {image 'dealii/base' }
+  agent  { 
+  docker {
+  image 'dealii/base'
+  	 label 'has-docker'
+	 }
   }
 
   stages {
