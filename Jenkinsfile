@@ -28,6 +28,7 @@ pipeline {
         }
     }
 
+/*
 post
 {
     always
@@ -35,4 +36,6 @@ post
       /*deleteDir()*/
     }
 }
+*/
+
 }
