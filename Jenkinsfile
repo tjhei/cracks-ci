@@ -33,7 +33,7 @@ post
 {
     always
     {
-      /*deleteDir()*/
+      deleteDir()
     }
 }
 */
