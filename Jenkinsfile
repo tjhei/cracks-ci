@@ -9,7 +9,8 @@ pipeline {
   stages {
     stage("Build") {
       steps {
-      echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+      echo "Running build ${env.BUILD_ID} on ${env.JENKINS_URL}"
+      sh 'printenv'
         sh 'ls -al'
       	sh 'cmake .'
         sh 'ls -al'
