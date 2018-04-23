@@ -4310,7 +4310,7 @@ main (
       deallog.depth_console(0);
 
       ParameterHandler prm;
-      FracturePhaseFieldProblem<2>::declare_parameters(prm);
+      FracturePhaseFieldProblem<5>::declare_parameters(prm);
       if (argc>1)
         {
           if (!prm.read_input(argv[1], true))
