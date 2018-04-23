@@ -1,7 +1,7 @@
 pipeline {
   agent  { 
   docker {
-  image 'dealii/base'
+  image 'dealii/base:gcc-mpi'
   	 label 'has-docker'
 	 }
   }
