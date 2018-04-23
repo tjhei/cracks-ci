@@ -1,24 +1,27 @@
 pipeline {
   agent  { 
   docker {
-  image 'dealii/base:gcc-mpi'
+  image 'v8.5.1-gcc-mpi-fulldepscandi-debugrelease' /*dealii/base:gcc-mpi'*/
   	 label 'has-docker'
 	 args '-v /home/docker/jenkins:/home/dealii/jenkins'
 	 }
   }
 
   stages {
-    stage("Build") {
+    stage("conf") {
       steps {
-      echo "Running build ${env.BUILD_ID} on ${env.JENKINS_URL}, env=${env.NODE_ENV}"
+      echo "Running build ${env.BUILD_ID} on ${env.NODE_NAME}, env=${env.NODE_ENV}"
       sh 'printenv'
         sh 'ls -al'
       	sh 'cmake .'
-        sh 'ls -al'
-      	sh 'make -j 4'
       }
       }
-      stage('Test') {
+    stage("build") {
+            steps {
+      	sh 'make -j 4'                
+            }
+    }
+    stage('Test') {
             steps {
                 echo 'Testing..'
             }
