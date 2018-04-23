@@ -1,7 +1,7 @@
 pipeline {
   agent  { 
   docker {
-  image 'v8.5.1-gcc-mpi-fulldepscandi-debugrelease' /*dealii/base:gcc-mpi'*/
+  image 'dealii/dealii:v8.5.1-gcc-mpi-fulldepscandi-debugrelease' /*dealii/base:gcc-mpi'*/
   	 label 'has-docker'
 	 args '-v /home/docker/jenkins:/home/dealii/jenkins'
 	 }
