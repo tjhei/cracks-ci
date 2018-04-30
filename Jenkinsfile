@@ -27,7 +27,7 @@ pipeline {
     stage ("check") {
       when {
 	expression { "${params.TRUST_BUILD}" == "false"
-	    and !["a@b.com"].contains("${CHANGE_AUTHOR_EMAIL}")
+	    and !["a@b.com", "heister@clemson.edu"].contains("${env.CHANGE_AUTHOR_EMAIL}")
 	    }
       }
       steps
