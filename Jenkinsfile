@@ -9,6 +9,8 @@ pipeline {
 
   parameters {
     booleanParam(defaultValue: false, description: 'do we trust this user to run the testsuite?', name: 'TRUST_BUILD')
+      }
+  
 
   stages
     {
@@ -32,7 +34,6 @@ pipeline {
 	    sh "exit 1"
 	}
     }
-
 
     stage("conf") {
       steps {
