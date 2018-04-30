@@ -21,6 +21,7 @@ pipeline {
 	  sh 'printenv'
 	  echo '${params.TRUST_BUILD}'
 	  echo '${TRUST_BUILD}'
+	  echo '${env.TRUST_BUILD}'
 	  }
     }
     
