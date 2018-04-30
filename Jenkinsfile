@@ -17,7 +17,7 @@ pipeline {
     stage("check")
     {
       when {
-	environment name: "TRUSTED_BUILD", value: false
+	environment name: "TRUSTED_BUILD", value: "false"
 	  }
       steps
 	{ 
