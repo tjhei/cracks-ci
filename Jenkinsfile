@@ -27,6 +27,7 @@ pipeline {
     stage ("check") {
       when {
 	expression { "${params.TRUST_BUILD}" == "false" }
+      }
       steps
 	{ 
 	   script {
