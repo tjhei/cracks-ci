@@ -1,41 +1,67 @@
 pipeline {
   agent  { 
-  docker {
-  image 'dealii/dealii:v8.5.1-gcc-mpi-fulldepscandi-debugrelease' /*dealii/base:gcc-mpi'*/
-  	 label 'has-docker'
-	 args '-v /home/docker/jenkins:/home/dealii/jenkins'
-	 }
+    docker {
+      image 'dealii/dealii:v8.5.1-gcc-mpi-fulldepscandi-debugrelease' /*dealii/base:gcc-mpi'*/
+	label 'has-docker'
+	args '-v /home/docker/jenkins:/home/dealii/jenkins'
+	}
   }
 
-  stages {
-    stage("conf") {
-      steps {
-      echo "Running build ${env.BUILD_ID} on ${env.NODE_NAME}, env=${env.NODE_ENV}"
-      sh 'printenv'
-        sh 'ls -al'
-      	sh 'cmake .'
-      }
-      }
-    stage("build") {
-            steps {
-      	sh 'make -j 4'                
-            }
-    }
-    stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
+  parameters {
+    booleanParam(defaultValue: false, description: 'do we trust this user to run the testsuite?', name: 'TRUST_BUILD')
+
+  stages
+    {
+    stage("check")
+    {
+      when {
+	environment name: "TRUSTED_BUILD", value: false
+	  }
+      steps
+	{ 
+	   script {
+	     def trusted = readTrusted 'docker/trusted_users'
+	     def lines = trusted.readLines()
+			   println(lines)
+	     def found = lines.find{ line-> line == "${CHANGE_AUTHOR_EMAIL}"  }
+	     println ("the user is ${ found ? '' : 'not ' } trusted")
+	    
+	  } 
+
+	  echo "please ask an admin to rerun on jenkins with TRUST_BUILD=true"
+	    sh "exit 1"
+	}
     }
 
-/*
-post
-{
+
+    stage("conf") {
+      steps {
+	echo "Running build ${env.BUILD_ID} on ${env.NODE_NAME}, env=${env.NODE_ENV}"
+	  sh 'printenv'
+	  sh 'ls -al'
+	  sh 'cmake .'
+	  }
+    }
+    stage("build") {
+      steps {
+      	sh 'make -j 4'                
+	  }
+    }
+    stage('Test') {
+      steps {
+	echo 'Testing..'
+	  }
+    }
+  }
+
+  /*
+    post
+    {
     always
     {
-      deleteDir()
+    deleteDir()
     }
-}
-*/
+    }
+  */
 
 }
