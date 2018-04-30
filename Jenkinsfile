@@ -14,11 +14,19 @@ pipeline {
 
   stages
     {
-    stage("check")
-    {
-      when {
-	environment name: "TRUSTED_BUILD", value: "false"
+      
+    stage("pre") {
+      steps {
+	echo "Running build ${env.BUILD_ID} on ${env.NODE_NAME}, env=${env.NODE_ENV}"
+	  sh 'printenv'
+	  echo '${params.TRUSTED_BUILD}'
+	  echo '${TRUSTED_BUILD}'
 	  }
+    }
+    
+    stage ("check") {
+      when {
+	expression { "${params.TRUSTED_BUILD}" == "false" }
       steps
 	{ 
 	   script {
