@@ -26,19 +26,12 @@ pipeline {
     
     stage ("check") {
       when {
-	expression { "${params.TRUST_BUILD}" == "false" }
+	expression { "${params.TRUST_BUILD}" == "false"
+	    and !["a@b.com"].contains("${CHANGE_AUTHOR_EMAIL}")
+	    }
       }
       steps
 	{ 
-	   script {
-	     def trusted = readTrusted 'docker/trusted_users'
-	     def lines = trusted.readLines()
-			   println(lines)
-	     def found = lines.find{ line-> line == "${CHANGE_AUTHOR_EMAIL}"  }
-	     println ("the user is ${ found ? '' : 'not ' } trusted")
-	    
-	  } 
-
 	  echo "please ask an admin to rerun on jenkins with TRUST_BUILD=true"
 	    sh "exit 1"
 	}
