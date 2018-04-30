@@ -19,14 +19,14 @@ pipeline {
       steps {
 	echo "Running build ${env.BUILD_ID} on ${env.NODE_NAME}, env=${env.NODE_ENV}"
 	  sh 'printenv'
-	  echo '${params.TRUSTED_BUILD}'
-	  echo '${TRUSTED_BUILD}'
+	  echo '${params.TRUST_BUILD}'
+	  echo '${TRUST_BUILD}'
 	  }
     }
     
     stage ("check") {
       when {
-	expression { "${params.TRUSTED_BUILD}" == "false" }
+	expression { "${params.TRUST_BUILD}" == "false" }
       steps
 	{ 
 	   script {
